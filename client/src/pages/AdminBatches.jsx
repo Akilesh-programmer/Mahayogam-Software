@@ -1,14 +1,20 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaPlus, FaMicrophone } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
 
 const AdminBatches = () => {
   const { city } = useParams(); // Get city from URL
+  const navigate = useNavigate(); // For navigation
   const [search, setSearch] = useState('');
 
-  // List of batches (For now, dummy data)
-  const batches = ['Batch 1', 'Batch 2', 'Batch 3', 'Batch 4'];
+  // List of batches (For now, dummy data with numbers)
+  const batches = [
+    { id: 1, number: '101' },
+    { id: 2, number: '102' },
+    { id: 3, number: '103' },
+    { id: 4, number: '104' },
+  ];
 
   return (
     <div className="h-screen flex flex-col items-center px-4 py-8 md:hidden">
@@ -40,13 +46,14 @@ const AdminBatches = () => {
       {/* Batch List */}
       <div className="w-full max-w-md flex flex-col gap-4">
         {batches
-          .filter((batch) => batch.toLowerCase().includes(search.toLowerCase()))
-          .map((batch, index) => (
+          .filter((batch) => batch.number.includes(search))
+          .map((batch) => (
             <button
-              key={index}
+              key={batch.id}
+              onClick={() => navigate(`/admin-attendance/${batch.number}`)}
               className="w-full py-3 bg-white text-black rounded-lg shadow-md text-lg font-semibold hover:bg-gray-100 transition"
             >
-              {batch}
+              Batch {batch.number}
             </button>
           ))}
       </div>
