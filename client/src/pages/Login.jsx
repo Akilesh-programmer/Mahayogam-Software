@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-  
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -9,9 +9,9 @@ const Login = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
+    const token = localStorage.getItem('jwtToken');
     if (token) {
-      navigate("/admin-cities");
+      navigate('/admin-cities');
     }
   }, [navigate]);
 
@@ -28,7 +28,6 @@ const Login = () => {
         }
       );
 
-      console.log(response.data);
       const token = response.data.token;
       localStorage.setItem('jwtToken', token);
       alert('Login successful!');

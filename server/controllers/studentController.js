@@ -93,8 +93,6 @@ exports.updateFeeStatus = async (req, res) => {
     const student = await Student.findById(studentId);
     if (!student) return res.status(404).json({ message: 'Student not found' });
 
-    console.log(student.feeRecords);
-
     month = parseInt(month, 10);
     month = Number(month);
     year = Number(year);

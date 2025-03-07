@@ -105,9 +105,6 @@ const StudentDetails = () => {
           year = Number(year);
           key = '' + month + '/' + year;
           const feeStatus = studentData.feeRecordsMap?.[key] || 'Unpaid';
-          console.log(Object.keys(studentData.feeRecordsMap)); // See all available keys
-          console.log('Constructed Key:', key); // Check what key you are searching for
-          console.log(studentData.feeRecordsMap[key]);
 
           return (
             <div
