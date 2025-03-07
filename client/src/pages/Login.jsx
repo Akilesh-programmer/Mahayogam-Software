@@ -1,10 +1,48 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+  
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      navigate("/admin-cities");
+    }
+  }, [navigate]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/auth/login',
+        {
+          email,
+          password,
+        }
+      );
+
+      console.log(response.data);
+      const token = response.data.token;
+      localStorage.setItem('jwtToken', token);
+      alert('Login successful!');
+
+      navigate('/admin-cities'); // ✅ Redirect after login
+    } catch (error) {
+      setError('Invalid email or password. Please try again.');
+    }
+  };
+
   return (
     <div className="h-screen flex items-center justify-center px-4 bg-gradient-to-r from-[#EBC894] to-white md:hidden">
-      {/* Transparent Glass Background */}
       <div className="absolute inset-0 backdrop-blur-lg"></div>
 
-      {/* Login Form */}
       <div
         className="relative z-10 shadow-lg rounded-2xl p-6 w-full max-w-sm border border-white/40"
         style={{
@@ -17,25 +55,30 @@ const Login = () => {
           Enter your email and password to log in
         </p>
 
-        {/* Form Start */}
-        <form className="mt-6">
-          {/* Email Input */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+        )}
+
+        <form className="mt-6" onSubmit={handleLogin}>
           <div>
             <input
               type="email"
               name="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full p-3 border border-gray-300 bg-white bg-opacity-50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black placeholder-gray-500 text-sm"
             />
           </div>
 
-          {/* Password Input */}
           <div className="mt-4 relative">
             <input
               type="password"
               name="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full p-3 border border-gray-300 bg-white bg-opacity-50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black placeholder-gray-500 text-sm"
             />
@@ -44,7 +87,6 @@ const Login = () => {
             </span>
           </div>
 
-          {/* Remember Me & Forgot Password */}
           <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
             <label className="flex items-center space-x-2">
               <input type="checkbox" className="w-4 h-4" />
@@ -55,7 +97,6 @@ const Login = () => {
             </a>
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold text-sm mt-4 hover:bg-blue-700 transition"
@@ -63,54 +104,6 @@ const Login = () => {
             Log In
           </button>
         </form>
-        {/* Form End */}
-
-        {/* OR Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow border-b border-gray-400"></div>
-          <span className="mx-3 text-gray-600 text-xs">Or login with</span>
-          <div className="flex-grow border-b border-gray-400"></div>
-        </div>
-
-        {/* Social Login Buttons */}
-        <div className="flex justify-center space-x-3">
-          <button className="p-3 bg-white bg-opacity-50 rounded-lg shadow-md hover:bg-opacity-60 transition">
-            <img
-              src="https://www.svgrepo.com/show/355037/google.svg"
-              alt="Google"
-              className="w-6 h-6"
-            />
-          </button>
-          <button className="p-3 bg-white bg-opacity-50 rounded-lg shadow-md hover:bg-opacity-60 transition">
-            <img
-              src="https://www.svgrepo.com/show/475647/facebook-color.svg"
-              alt="Facebook"
-              className="w-6 h-6"
-            />
-          </button>
-          <button className="p-3 bg-white bg-opacity-50 rounded-lg shadow-md hover:bg-opacity-60 transition">
-            <img
-              src="https://www.svgrepo.com/show/511330/apple-173.svg"
-              alt="Apple"
-              className="w-6 h-6"
-            />
-          </button>
-          <button className="p-3 bg-white bg-opacity-50 rounded-lg shadow-md hover:bg-opacity-60 transition">
-            <img
-              src="https://www.svgrepo.com/show/506008/smartphone.svg"
-              alt="Phone"
-              className="w-7 h-7"
-            />
-          </button>
-        </div>
-
-        {/* Signup Link */}
-        <p className="text-center text-gray-700 text-sm mt-6">
-          Don’t have an account?{' '}
-          <a href="#" className="text-blue-500 font-medium">
-            Sign Up
-          </a>
-        </p>
       </div>
     </div>
   );
