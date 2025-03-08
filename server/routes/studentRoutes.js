@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const studentController = require('../controllers/studentController');
-const { authenticateUser } = require('../middleware/authMiddleware');
+const { authenticateUser } = require('../Middleware/authMiddleware');
 
 router.get(
   '/batch/:batchId',
@@ -15,6 +15,10 @@ router.get(
 );
 router.patch('/:studentId', authenticateUser, studentController.updateStudent);
 router.post('/', authenticateUser, studentController.addStudent);
-router.patch('/feeStatus/:studentId', authenticateUser, studentController.updateFeeStatus);
+router.patch(
+  '/feeStatus/:studentId',
+  authenticateUser,
+  studentController.updateFeeStatus
+);
 
 module.exports = router;
