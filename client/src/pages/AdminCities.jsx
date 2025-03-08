@@ -18,7 +18,7 @@ const AdminCities = () => {
   const fetchCities = async () => {
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await axios.get('http://localhost:8000/api/places/', {
+      const response = await axios.get('https://mahayogam-software.onrender.com/api/places/', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCities(response.data);
@@ -36,7 +36,7 @@ const AdminCities = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await axios.post(
-        'http://localhost:8000/api/places/',
+        'https://mahayogam-software.onrender.com/api/places/',
         { place: newPlace },
         { headers: { Authorization: `Bearer ${token}` } }
       );

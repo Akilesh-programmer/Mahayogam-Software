@@ -21,7 +21,7 @@ const AdminBatches = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       const response = await fetch(
-        `http://localhost:8000/api/batches/${cityId}`,
+        `https://mahayogam-software.onrender.com/api/batches/${cityId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -46,7 +46,7 @@ const AdminBatches = () => {
 
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await fetch('http://localhost:8000/api/batches', {
+      const response = await fetch('https://mahayogam-software.onrender.com/api/batches', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

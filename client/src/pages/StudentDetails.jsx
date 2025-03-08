@@ -17,7 +17,7 @@ const StudentDetails = () => {
       try {
         const token = localStorage.getItem('jwtToken');
         const response = await axios.get(
-          `http://localhost:8000/api/students/${studentId}`,
+          `https://mahayogam-software.onrender.com/api/students/${studentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -65,7 +65,7 @@ const StudentDetails = () => {
 
       // ✅ Send only the required data in the PUT request
       await axios.patch(
-        `http://localhost:8000/api/students/feeStatus/${studentId}`,
+        `https://mahayogam-software.onrender.com/api/students/feeStatus/${studentId}`,
         { month, year, status: newStatus }, // ✅ Sending only necessary data
         { headers: { Authorization: `Bearer ${token}` } }
       );

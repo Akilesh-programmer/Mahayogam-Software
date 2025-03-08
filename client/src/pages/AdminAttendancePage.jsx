@@ -19,7 +19,7 @@ const AdminAttendancePage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/students/batch/${batchNumber}`, {
+      .get(`https://mahayogam-software.onrender.com/api/students/batch/${batchNumber}`, {
         headers: { Authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
@@ -51,7 +51,7 @@ const AdminAttendancePage = () => {
   const toggleAttendance = (studentId, status) => {
     axios
       .patch(
-        `http://localhost:8000/api/students/${studentId}`, // Assuming this is the correct API endpoint
+        `https://mahayogam-software.onrender.com/api/students/${studentId}`, // Assuming this is the correct API endpoint
         { status }, // Sending only required data
         { headers: { Authorization: `Bearer ${jwtToken}` } }
       )
@@ -72,7 +72,7 @@ const AdminAttendancePage = () => {
     }
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await fetch('http://localhost:8000/api/students/', {
+      const response = await fetch('https://mahayogam-software.onrender.com/api/students/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
