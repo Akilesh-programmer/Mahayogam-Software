@@ -34,6 +34,7 @@ const Login = () => {
 
       navigate('/admin-cities'); // ✅ Redirect after login
     } catch (error) {
+      console.log(error);
       setError('Invalid email or password. Please try again.');
     }
   };
