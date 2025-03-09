@@ -82,9 +82,6 @@ const Login = () => {
               required
               className="w-full p-3 border border-gray-300 bg-white bg-opacity-50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black placeholder-gray-500 text-sm"
             />
-            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm cursor-pointer">
-              👁️
-            </span>
           </div>
 
           <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
