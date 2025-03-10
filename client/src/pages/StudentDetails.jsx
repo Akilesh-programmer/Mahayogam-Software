@@ -4,6 +4,8 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import axios from 'axios';
 import Logo from '../assets/images/AdminHomeImage.png';
 
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const StudentDetails = () => {
   const { studentId } = useParams();
   const [studentData, setStudentData] = useState({
@@ -17,7 +19,7 @@ const StudentDetails = () => {
       try {
         const token = localStorage.getItem('jwtToken');
         const response = await axios.get(
-          `https://mahayogam-software.onrender.com/api/students/${studentId}`,
+          `${VITE_API_BASE_URL}/api/students/${studentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -65,7 +67,7 @@ const StudentDetails = () => {
 
       // ✅ Send only the required data in the PUT request
       await axios.patch(
-        `https://mahayogam-software.onrender.com/api/students/feeStatus/${studentId}`,
+        `${VITE_API_BASE_URL}/api/students/feeStatus/${studentId}`,
         { month, year, status: newStatus }, // ✅ Sending only necessary data
         { headers: { Authorization: `Bearer ${token}` } }
       );

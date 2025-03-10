@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -21,7 +23,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        'https://mahayogam-software.onrender.com/api/auth/login',
+        `${VITE_API_BASE_URL}/api/auth/login`,
         {
           email,
           password,

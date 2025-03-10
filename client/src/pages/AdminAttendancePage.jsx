@@ -4,6 +4,8 @@ import { CheckCircle, XCircle, PlusCircle, Eye } from 'lucide-react';
 import axios from 'axios';
 import Logo from '../assets/images/AdminHomeImage.png';
 
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AdminAttendancePage = () => {
   const { batchNumber } = useParams();
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const AdminAttendancePage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://mahayogam-software.onrender.com/api/students/batch/${batchNumber}`, {
+      .get(`${VITE_API_BASE_URL}/api/students/batch/${batchNumber}`, {
         headers: { Authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
@@ -51,7 +53,7 @@ const AdminAttendancePage = () => {
   const toggleAttendance = (studentId, status) => {
     axios
       .patch(
-        `https://mahayogam-software.onrender.com/api/students/${studentId}`, // Assuming this is the correct API endpoint
+        `${VITE_API_BASE_URL}/api/students/${studentId}`, // Assuming this is the correct API endpoint
         { status }, // Sending only required data
         { headers: { Authorization: `Bearer ${jwtToken}` } }
       )
@@ -72,14 +74,17 @@ const AdminAttendancePage = () => {
     }
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await fetch('https://mahayogam-software.onrender.com/api/students/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ batchId: batchNumber, name, age }),
-      });
+      const response = await fetch(
+        `${VITE_API_BASE_URL}/api/students/`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ batchId: batchNumber, name, age }),
+        }
+      );
 
       if (response.ok) {
         setShowForm(false);

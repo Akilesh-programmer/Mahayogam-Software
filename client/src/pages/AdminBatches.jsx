@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
 
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AdminBatches = () => {
   const { city: cityId } = useParams(); // Get city ID from URL
   const location = useLocation();
@@ -21,7 +23,7 @@ const AdminBatches = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       const response = await fetch(
-        `https://mahayogam-software.onrender.com/api/batches/${cityId}`,
+        `${VITE_API_BASE_URL}/api/batches/${cityId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -46,7 +48,7 @@ const AdminBatches = () => {
 
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await fetch('https://mahayogam-software.onrender.com/api/batches', {
+      const response = await fetch(`${VITE_API_BASE_URL}/api/batches`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

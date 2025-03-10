@@ -4,6 +4,8 @@ import axios from 'axios';
 import { FaPlus } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
 
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AdminCities = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
@@ -18,9 +20,12 @@ const AdminCities = () => {
   const fetchCities = async () => {
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await axios.get('https://mahayogam-software.onrender.com/api/places/', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${VITE_API_BASE_URL}/api/places/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setCities(response.data);
     } catch (error) {
       console.error('Error fetching cities:', error);
@@ -36,7 +41,7 @@ const AdminCities = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await axios.post(
-        'https://mahayogam-software.onrender.com/api/places/',
+        `${VITE_API_BASE_URL}/api/places/`,
         { place: newPlace },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -114,7 +119,7 @@ const AdminCities = () => {
               >
                 Create
               </button>
-            </div>  
+            </div>
           </div>
         </div>
       )}
