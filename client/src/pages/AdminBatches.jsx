@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
+import API from '../api/axiosInstance';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,17 +48,10 @@ const AdminBatches = () => {
     if (!batchName.trim()) return;
 
     try {
-      const token = localStorage.getItem('jwtToken');
-      const response = await fetch(`${VITE_API_BASE_URL}/api/batches`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ placeId: cityId, name: batchName }),
+      await API.post('/api/batches', {
+        placeId: cityId,
+        name: batchName,
       });
-
-      if (!response.ok) throw new Error('Failed to create batch');
 
       setBatchName(''); // Clear input
       setShowModal(false); // Close modal

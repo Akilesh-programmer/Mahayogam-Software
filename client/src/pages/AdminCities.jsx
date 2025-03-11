@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaPlus } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
+import API from "../api/axiosInstance";
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -40,7 +41,7 @@ const AdminCities = () => {
     if (!newPlace.trim()) return;
     try {
       const token = localStorage.getItem('jwtToken');
-      await axios.post(
+      await API.post(
         `${VITE_API_BASE_URL}/api/places/`,
         { place: newPlace },
         { headers: { Authorization: `Bearer ${token}` } }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { CheckCircle, XCircle } from 'lucide-react';
 import axios from 'axios';
 import Logo from '../assets/images/AdminHomeImage.png';
+import API from '../api/axiosInstance';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -66,7 +67,7 @@ const StudentDetails = () => {
       const newStatus = currentStatus === 'Paid' ? 'Unpaid' : 'Paid';
 
       // ✅ Send only the required data in the PUT request
-      await axios.patch(
+      await API.patch(
         `${VITE_API_BASE_URL}/api/students/feeStatus/${studentId}`,
         { month, year, status: newStatus }, // ✅ Sending only necessary data
         { headers: { Authorization: `Bearer ${token}` } }

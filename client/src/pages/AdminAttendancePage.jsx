@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle, XCircle, PlusCircle, Eye } from 'lucide-react';
 import axios from 'axios';
 import Logo from '../assets/images/AdminHomeImage.png';
+import API from '../api/axiosInstance';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -50,21 +51,21 @@ const AdminAttendancePage = () => {
       .catch((error) => console.error('Error fetching students:', error));
   }, [batchNumber, showForm]);
 
-  const toggleAttendance = (studentId, status) => {
-    axios
-      .patch(
-        `${VITE_API_BASE_URL}/api/students/${studentId}`, // Assuming this is the correct API endpoint
-        { status }, // Sending only required data
-        { headers: { Authorization: `Bearer ${jwtToken}` } }
-      )
-      .then(() => {
-        setStudents((prevStudents) =>
-          prevStudents.map((student) =>
-            student._id === studentId ? { ...student, status } : student
-          )
-        );
-      })
-      .catch((error) => console.error('Error updating attendance:', error));
+  const toggleAttendance = async (studentId, status) => {
+    try {
+      await API.patch(
+        `/api/students/${studentId}`, // Assuming this is the correct API endpoint
+        { status } // Sending only required data
+      );
+
+      setStudents((prevStudents) =>
+        prevStudents.map((student) =>
+          student._id === studentId ? { ...student, status } : student
+        )
+      );
+    } catch (error) {
+      console.error('Error updating attendance:', error);
+    }
   };
 
   const handleCreate = async () => {
@@ -73,20 +74,12 @@ const AdminAttendancePage = () => {
       return;
     }
     try {
-      const token = localStorage.getItem('jwtToken');
-      const response = await fetch(
-        `${VITE_API_BASE_URL}/api/students/`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ batchId: batchNumber, name, age }),
-        }
-      );
-
-      if (response.ok) {
+      const response = await API.post(`/api/students/`, {
+        batchId: batchNumber,
+        name,
+        age,
+      });
+      if (response.status == 201) {
         setShowForm(false);
         setName('');
         setAge('');
