@@ -123,11 +123,11 @@ exports.updateFeeStatus = async (req, res) => {
 
 exports.addStudent = async (req, res) => {
   try {
-    const { batchId, name, age } = req.body;
+    const { batchId, name, age, gender } = req.body;
     const batch = await Batch.findById(batchId);
     if (!batch) return res.status(404).json({ error: 'Batch not found' });
 
-    const newStudent = new Student({ name, age, batch: batchId });
+    const newStudent = new Student({ name, age, gender, batch: batchId });
     await newStudent.save();
 
     batch.students.push(newStudent._id);

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaPlus } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
-import API from "../api/axiosInstance";
+import API from '../api/axiosInstance';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -21,12 +21,9 @@ const AdminCities = () => {
   const fetchCities = async () => {
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await API.get(
-        `${VITE_API_BASE_URL}/api/places/`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await API.get(`${VITE_API_BASE_URL}/api/places/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCities(response.data);
     } catch (error) {
       console.error('Error fetching cities:', error);
@@ -50,6 +47,11 @@ const AdminCities = () => {
       setShowPopup(false);
       fetchCities();
     } catch (error) {
+      console.log(error.statusCode);
+      if (error.response.status === 500) {
+        alert('Duplicate entries are not allowed');
+        return;
+      }
       console.error('Error adding place:', error);
     }
   };

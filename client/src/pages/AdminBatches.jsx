@@ -47,6 +47,10 @@ const AdminBatches = () => {
       setShowModal(false); // Close modal
       fetchBatches(); // Reload batches
     } catch (error) {
+      if (error.response.status === 500) {
+        alert('Duplicate entires are not allowed');
+        return;
+      }
       console.error(error.message);
     }
   };

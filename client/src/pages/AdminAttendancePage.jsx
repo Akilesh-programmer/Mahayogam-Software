@@ -17,6 +17,7 @@ const AdminAttendancePage = () => {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
 
   const jwtToken = localStorage.getItem('jwtToken');
 
@@ -69,8 +70,8 @@ const AdminAttendancePage = () => {
   };
 
   const handleCreate = async () => {
-    if (!name || !age) {
-      alert('Please enter both name and age.');
+    if (!name || !age || !gender) {
+      alert('Please enter both name, age and gender.');
       return;
     }
     try {
@@ -78,11 +79,13 @@ const AdminAttendancePage = () => {
         batchId: batchNumber,
         name,
         age,
+        gender
       });
       if (response.status == 201) {
         setShowForm(false);
         setName('');
         setAge('');
+        setGender('');
       } else {
         alert('Failed to add student.');
       }
@@ -130,6 +133,13 @@ const AdminAttendancePage = () => {
             placeholder="Enter age"
             value={age}
             onChange={(e) => setAge(e.target.value)}
+            className="w-full px-3 py-2 border rounded-md mb-3"
+          />
+          <input
+            type="test"
+            placeholder="Enter gender"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
             className="w-full px-3 py-2 border rounded-md mb-3"
           />
           <div className="flex justify-end gap-2">
