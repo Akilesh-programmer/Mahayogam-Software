@@ -1,28 +1,3 @@
-// import axios from 'axios';
-
-// const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-// const API = axios.create({
-//   baseURL: VITE_API_BASE_URL,
-// });
-
-// // Add a response interceptor
-// API.interceptors.response.use(
-//   (response) => response, // Pass valid responses
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-//       // Token expired: Clear storage & redirect to login only once
-//       localStorage.removeItem('jwtToken');
-
-//       if (window.location.pathname !== '/') {
-//         window.location.replace('/'); // Redirect to login
-//       }
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default API;
 import axios from 'axios';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
