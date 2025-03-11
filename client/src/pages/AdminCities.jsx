@@ -21,7 +21,7 @@ const AdminCities = () => {
   const fetchCities = async () => {
     try {
       const token = localStorage.getItem('jwtToken');
-      const response = await axios.get(
+      const response = await API.get(
         `${VITE_API_BASE_URL}/api/places/`,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -85,7 +85,7 @@ const AdminCities = () => {
           ))}
       </div>
       <button
-        className="m-8 flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition"
+        className="m-8 flex items-center gap-2 bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition"
         onClick={() => {
           setNewPlace('');
           setShowPopup(true);

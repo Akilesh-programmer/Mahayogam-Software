@@ -21,7 +21,7 @@ const AdminAttendancePage = () => {
   const jwtToken = localStorage.getItem('jwtToken');
 
   useEffect(() => {
-    axios
+    API
       .get(`${VITE_API_BASE_URL}/api/students/batch/${batchNumber}`, {
         headers: { Authorization: `Bearer ${jwtToken}` },
       })

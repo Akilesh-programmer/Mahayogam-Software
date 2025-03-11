@@ -22,18 +22,8 @@ const AdminBatches = () => {
   // Fetch batches from API
   const fetchBatches = async () => {
     try {
-      const token = localStorage.getItem('jwtToken');
-      const response = await fetch(
-        `${VITE_API_BASE_URL}/api/batches/${cityId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (!response.ok) throw new Error('Failed to fetch batches');
-
-      const data = await response.json();
-      setBatches(data);
+      const response = await API.get(`/api/batches/${cityId}`);
+      setBatches(response.data);
     } catch (error) {
       console.error(error.message);
     }

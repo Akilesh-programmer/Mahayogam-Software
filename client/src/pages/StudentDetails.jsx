@@ -19,7 +19,7 @@ const StudentDetails = () => {
     const fetchStudentDetails = async () => {
       try {
         const token = localStorage.getItem('jwtToken');
-        const response = await axios.get(
+        const response = await API.get(
           `${VITE_API_BASE_URL}/api/students/${studentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
