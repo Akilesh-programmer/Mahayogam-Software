@@ -15,6 +15,7 @@ router.get(
 );
 router.patch('/:studentId', authenticateUser, studentController.updateStudent);
 router.post('/', authenticateUser, studentController.addStudent);
+router.post('/bulk-add', authenticateUser, studentController.bulkAdd)
 router.patch(
   '/feeStatus/:studentId',
   authenticateUser,

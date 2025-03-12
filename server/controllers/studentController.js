@@ -140,3 +140,24 @@ exports.addStudent = async (req, res) => {
     res.status(500).json({ error: 'Error adding student' });
   }
 };
+
+exports.bulkAdd = async (req, res) => {
+  try {
+    const studentsData = req.body;
+
+    const formattedStudents = studentsData.map((student) => ({
+      name: student.name,
+      age: student.age,
+      gender: student.gender,
+      profile: student.profile || undefined,
+      attendanceSummary: [],
+      feeRecords: [],
+    }));
+
+    await Student.insertMany(formattedStudents);
+    res.status(201).json({ message: 'Students added successfully!' });
+  } catch (error) {
+    console.error('Error uploading students:', error);
+    res.status(500).json({ error: 'Failed to upload students' });
+  }
+};

@@ -4,6 +4,7 @@ import { CheckCircle, XCircle, PlusCircle, Eye } from 'lucide-react';
 import axios from 'axios';
 import Logo from '../assets/images/AdminHomeImage.png';
 import API from '../api/axiosInstance';
+import * as XLSX from 'xlsx';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -18,14 +19,15 @@ const AdminAttendancePage = () => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
+  const [showBulkAddForm, setShowBulkAddForm] = useState(false);
+  const [file, setFile] = useState(null);
 
   const jwtToken = localStorage.getItem('jwtToken');
 
   useEffect(() => {
-    API
-      .get(`${VITE_API_BASE_URL}/api/students/batch/${batchNumber}`, {
-        headers: { Authorization: `Bearer ${jwtToken}` },
-      })
+    API.get(`${VITE_API_BASE_URL}/api/students/batch/${batchNumber}`, {
+      headers: { Authorization: `Bearer ${jwtToken}` },
+    })
       .then((response) => {
         const today_date = new Date();
         const formattedDate = `${today_date.getFullYear()}-${(
@@ -79,7 +81,7 @@ const AdminAttendancePage = () => {
         batchId: batchNumber,
         name,
         age,
-        gender
+        gender,
       });
       if (response.status == 201) {
         setShowForm(false);
@@ -93,6 +95,44 @@ const AdminAttendancePage = () => {
       console.error('Error:', error);
       alert('Something went wrong while adding student.');
     }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      alert('Please select a file first!');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+
+    reader.onload = async (e) => {
+      try {
+        const binaryStr = e.target.result;
+        const workbook = XLSX.read(binaryStr, { type: 'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        const formattedData = jsonData.map((student) => ({
+          name: student.Name || '', // Ensure it matches column names in Excel
+          age: student.Age || 0,
+          gender: student.Gender || '',
+        }));
+
+        await API.post(`/api/students/bulk-add`, formattedData);
+
+        alert('Students uploaded successfully!');
+      } catch (error) {
+        console.error('Error processing file:', error);
+        alert('Failed to upload students.');
+      }
+    };
   };
 
   return (
@@ -113,12 +153,71 @@ const AdminAttendancePage = () => {
           🔍
         </span>
       </div>
-      <button
-        className="flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600 mb-6"
-        onClick={() => setShowForm(!showForm)}
-      >
-        <PlusCircle size={20} /> Add Student
-      </button>
+      <div className="flex gap-1">
+        <button
+          className="w-48 flex items-center justify-center gap-2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600"
+          onClick={() => setShowForm(!showForm)}
+        >
+          <PlusCircle size={20} /> Add Student
+        </button>
+        <button
+          className="w-48 flex items-center justify-center gap-2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600"
+          onClick={() => setShowBulkAddForm(!showBulkAddForm)}
+        >
+          <PlusCircle size={20} /> Bulk Add
+        </button>
+      </div>
+
+      {showBulkAddForm && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+            <h2 className="text-lg font-semibold mb-2">Import Details</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Upload Excel files (.xlsx or .xls)
+            </p>
+
+            {/* Choose File Button */}
+            <label className="block w-full px-4 py-2 bg-blue-500 text-white rounded-md cursor-pointer text-center mb-4 hover:bg-blue-600">
+              Choose File
+              <input
+                type="file"
+                className="hidden"
+                accept=".xlsx, .xls"
+                onChange={handleFileChange}
+              />
+            </label>
+            <button
+              onClick={handleUpload}
+              className="block w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mb-4"
+            >
+              Upload
+            </button>
+            <a
+              href="/Sample.xlsx"
+              download="Sample.xlsx"
+              className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mb-4 text-center block"
+            >
+              Download Sample File
+            </a>
+
+            <div className="flex justify-end gap-4">
+              <button
+                className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
+                onClick={() => setShowBulkAddForm(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                onClick={() => setShowBulkAddForm(false)}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showForm && (
         <div className="bg-white p-4 mb-8 mt-2 rounded-lg shadow-md w-80 ">
           <input
