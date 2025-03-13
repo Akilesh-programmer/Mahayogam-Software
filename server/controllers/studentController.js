@@ -143,7 +143,7 @@ exports.addStudent = async (req, res) => {
 
 exports.bulkAdd = async (req, res) => {
   try {
-    const studentsData = req.body;
+    const { batchId, studentsData } = req.body;
 
     const formattedStudents = studentsData.map((student) => ({
       name: student.name,
@@ -154,7 +154,12 @@ exports.bulkAdd = async (req, res) => {
       feeRecords: [],
     }));
 
-    await Student.insertMany(formattedStudents);
+    const insertedStudents = await Student.insertMany(formattedStudents);
+    const studentIds = insertedStudents.map((student) => student._id);
+
+    await Batch.findByIdAndUpdate(batchId, {
+      $push: { students: { $each: studentIds } },
+    });
     res.status(201).json({ message: 'Students added successfully!' });
   } catch (error) {
     console.error('Error uploading students:', error);

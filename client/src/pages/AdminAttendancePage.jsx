@@ -21,6 +21,7 @@ const AdminAttendancePage = () => {
   const [gender, setGender] = useState('');
   const [showBulkAddForm, setShowBulkAddForm] = useState(false);
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState('');
 
   const jwtToken = localStorage.getItem('jwtToken');
 
@@ -52,7 +53,7 @@ const AdminAttendancePage = () => {
         setStudents(updatedStudents);
       })
       .catch((error) => console.error('Error fetching students:', error));
-  }, [batchNumber, showForm]);
+  }, [batchNumber, showForm, showBulkAddForm]);
 
   const toggleAttendance = async (studentId, status) => {
     try {
@@ -100,6 +101,11 @@ const AdminAttendancePage = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
+    if (e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
+    } else {
+      setFileName(''); // Reset if no file is chosen
+    }
   };
 
   const handleUpload = async () => {
@@ -125,7 +131,10 @@ const AdminAttendancePage = () => {
           gender: student.Gender || '',
         }));
 
-        await API.post(`/api/students/bulk-add`, formattedData);
+        await API.post(`/api/students/bulk-add`, {
+          batchId: batchNumber,
+          studentsData: formattedData,
+        });
 
         alert('Students uploaded successfully!');
       } catch (error) {
@@ -186,6 +195,11 @@ const AdminAttendancePage = () => {
                 onChange={handleFileChange}
               />
             </label>
+            {fileName && (
+              <span className="block text-center text-gray-700 font-medium">
+                Selected file: {fileName}
+              </span>
+            )}
             <button
               onClick={handleUpload}
               className="block w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mb-4"

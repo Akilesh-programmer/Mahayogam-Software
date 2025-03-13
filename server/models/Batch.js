@@ -5,6 +5,4 @@ const BatchSchema = new mongoose.Schema({
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }]
 });
 
-BatchSchema.index({ name: 1 }, { unique: true });
-
 module.exports = mongoose.model('Batch', BatchSchema);

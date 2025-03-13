@@ -5,6 +5,4 @@ const PlaceSchema = new mongoose.Schema({
   batches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Batch' }]
 });
 
-PlaceSchema.index({ place: 1 }, { unique: true });
-
 module.exports = mongoose.model('Place', PlaceSchema);
