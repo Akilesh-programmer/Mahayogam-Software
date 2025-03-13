@@ -98,7 +98,11 @@ const AdminBatches = () => {
                 className="text-white group-hover:text-yellow-950 transition ml-4 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation(); // Prevents triggering button click
-                  navigate(`/batch-attendance-summary/${batch._id}/${encodeURIComponent(batch.name)}`); // Navigates to another page
+                  navigate(
+                    `/batch-attendance-summary/${
+                      batch._id
+                    }/${encodeURIComponent(batch.name)}`
+                  ); // Navigates to another page
                 }}
               />
             </button>
@@ -113,10 +117,12 @@ const AdminBatches = () => {
       </button>
       {/* Add Batch Modal */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-md">
-          <div className="bg-white rounded-lg p-6 w-96 shadow-lg mx-4">
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-white/95 rounded-lg p-6 w-96 shadow-lg mx-4 border border-gray-300">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold">Create New Batch</h3>
+              <h3 className="text-xl font-semibold text-gray-800">
+                Create New Batch
+              </h3>
               <button
                 onClick={() => {
                   setShowModal(false);
@@ -133,7 +139,7 @@ const AdminBatches = () => {
               placeholder="Enter batch name"
               value={batchName}
               onChange={(e) => setBatchName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-transparent text-gray-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <div className="flex justify-between mt-4">
@@ -142,13 +148,13 @@ const AdminBatches = () => {
                   setShowModal(false);
                   setBatchName(''); // Clear input on cancel
                 }}
-                className="px-4 py-2 text-gray-600 bg-gray-200 rounded-md"
+                className="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreateBatch}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
               >
                 Create
               </button>

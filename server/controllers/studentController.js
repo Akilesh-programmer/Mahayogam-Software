@@ -56,7 +56,7 @@ exports.updateStudent = async (req, res) => {
     if (!student) return res.status(404).json({ message: 'Student not found' });
 
     // Ensure date format is consistent
-    const today_date = new Date("2025-03-13");
+    const today_date = new Date();
     const formattedDate = `${today_date.getFullYear()}-${(
       today_date.getMonth() + 1
     )

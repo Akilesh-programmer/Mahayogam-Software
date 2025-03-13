@@ -178,9 +178,11 @@ const AdminAttendancePage = () => {
       </div>
 
       {showBulkAddForm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-            <h2 className="text-lg font-semibold mb-2">Import Details</h2>
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50">
+          <div className="bg-white/95 p-6 rounded-lg shadow-lg w-80 border border-gray-300">
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              Import Details
+            </h2>
             <p className="text-sm text-gray-600 mb-4">
               Upload Excel files (.xlsx or .xls)
             </p>
@@ -195,17 +197,20 @@ const AdminAttendancePage = () => {
                 onChange={handleFileChange}
               />
             </label>
+
             {fileName && (
               <span className="block text-center text-gray-700 font-medium">
                 Selected file: {fileName}
               </span>
             )}
+
             <button
               onClick={handleUpload}
               className="block w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mb-4"
             >
               Upload
             </button>
+
             <a
               href="/Sample.xlsx"
               download="Sample.xlsx"
@@ -233,45 +238,53 @@ const AdminAttendancePage = () => {
       )}
 
       {showForm && (
-        <div className="bg-white p-4 mb-8 mt-2 rounded-lg shadow-md w-80 ">
-          <input
-            type="text"
-            placeholder="Enter name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md mb-3"
-          />
-          <input
-            type="number"
-            placeholder="Enter age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md mb-3"
-          />
-          <input
-            type="test"
-            placeholder="Enter gender"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md mb-3"
-          />
-          <div className="flex justify-end gap-2">
-            <button
-              className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
-              onClick={() => setShowForm(false)}
-            >
-              Cancel
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              onClick={handleCreate}
-            >
-              Create
-            </button>
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50">
+          <div className="bg-white/95 p-6 rounded-lg shadow-lg w-80 border border-gray-300">
+            <h2 className="text-lg font-semibold text-gray-800 mb-3">
+              Add Details
+            </h2>
+
+            <input
+              type="text"
+              placeholder="Enter name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md mb-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+            <input
+              type="number"
+              placeholder="Enter age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md mb-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Enter gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md mb-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
+                onClick={() => setShowForm(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                onClick={handleCreate}
+              >
+                Create
+              </button>
+            </div>
           </div>
         </div>
       )}
-      <div className="w-full max-w-md">
+
+      <div className="w-full max-w-md mt-4">
         {students
           .filter((student) =>
             student.name.toLowerCase().includes(search.toLowerCase())

@@ -96,15 +96,15 @@ const AdminCities = () => {
         <FaPlus /> Add New
       </button>
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900 bg-opacity-30">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-xl font-bold">Add New Place</h2>
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-white/95 p-6 rounded-lg shadow-lg text-center border border-gray-300">
+            <h2 className="text-xl font-bold text-gray-800">Add New Place</h2>
             <input
               type="text"
               placeholder="Enter place name"
               value={newPlace}
               onChange={(e) => setNewPlace(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mt-4"
+              className="w-full p-2 border border-gray-300 rounded mt-4 bg-transparent text-gray-900 placeholder-gray-600"
             />
             <div className="flex justify-between mt-4">
               <button
@@ -112,13 +112,13 @@ const AdminCities = () => {
                   setNewPlace('');
                   setShowPopup(false);
                 }}
-                className="px-4 py-2 bg-gray-500 text-white rounded"
+                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAddPlace}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
                 Create
               </button>
