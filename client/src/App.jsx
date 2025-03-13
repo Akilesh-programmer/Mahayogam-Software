@@ -4,7 +4,8 @@ import AdminCities from './pages/AdminCities';
 import AdminBatches from './pages/AdminBatches';
 import AdminAttendancePage from './pages/AdminAttendancePage';
 import StudentDetails from './pages/StudentDetails';
-import ProtectedRoute from './components/ProtectedRoute.jsx'; // Ensure this path is correct
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import BatchAttendanceSummary from './pages/BatchAttendanceSummary';
 
 import './App.css';
 
@@ -26,6 +27,10 @@ function App() {
           <Route
             path="/student-details/:studentId"
             element={<StudentDetails />}
+          />
+          <Route
+            path="/batch-attendance-summary/:batchId/:batchName"
+            element={<BatchAttendanceSummary />}
           />
         </Route>
       </Routes>

@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import AdminHomeImage from '../assets/images/AdminHomeImage.png';
 import API from '../api/axiosInstance';
+import { Eye } from 'lucide-react';
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -58,12 +59,10 @@ const AdminBatches = () => {
   return (
     <div className="h-screen flex flex-col items-center px-4 py-8 md:hidden relative">
       <img src={AdminHomeImage} alt="Logo" className="w-80 h-auto mb-6" />
-
       {/* Display city name */}
       <h2 className="text-3xl font-extrabold text-gray-800 bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text mb-8">
         Batches in {cityName}
       </h2>
-
       {/* Search Bar */}
       <div className="relative w-full max-w-md mb-6">
         <input
@@ -77,7 +76,6 @@ const AdminBatches = () => {
           🔍
         </span>
       </div>
-
       {/* Batch List */}
       <div className="w-full max-w-md flex flex-col gap-4">
         {batches
@@ -92,13 +90,20 @@ const AdminBatches = () => {
                   state: { batchName: batch.name },
                 })
               }
-              className="w-full py-3 bg-yellow-950 text-white rounded-lg shadow-md text-lg font-semibold hover:bg-gray-100 transition"
+              className="w-full py-3 px-6 bg-yellow-950 text-white rounded-lg shadow-md text-lg font-semibold flex items-center justify-between hover:bg-gray-100 transition"
             >
-              {batch.name}
+              <span className="flex-1 text-center">{batch.name}</span>
+              <Eye
+                size={20}
+                className="text-white group-hover:text-yellow-950 transition ml-4 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevents triggering button click
+                  navigate(`/batch-attendance-summary/${batch._id}/${encodeURIComponent(batch.name)}`); // Navigates to another page
+                }}
+              />
             </button>
           ))}
       </div>
-
       {/* Add New Batch Button */}
       <button
         onClick={() => setShowModal(true)}
@@ -106,7 +111,6 @@ const AdminBatches = () => {
       >
         <FaPlus /> Add New Batch
       </button>
-
       {/* Add Batch Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-md">

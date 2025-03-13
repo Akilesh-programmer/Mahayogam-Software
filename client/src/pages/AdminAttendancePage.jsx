@@ -59,7 +59,7 @@ const AdminAttendancePage = () => {
     try {
       await API.patch(
         `/api/students/${studentId}`, // Assuming this is the correct API endpoint
-        { status } // Sending only required data
+        { status, batchNumber } // Sending only required data
       );
 
       setStudents((prevStudents) =>

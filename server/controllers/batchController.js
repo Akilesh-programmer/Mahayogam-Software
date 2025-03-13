@@ -1,5 +1,6 @@
 const Batch = require('../models/Batch');
 const Place = require('../models/Place');
+const Student = require('../models/Student');
 
 exports.getBatchesByPlace = async (req, res) => {
   try {
@@ -10,6 +11,24 @@ exports.getBatchesByPlace = async (req, res) => {
     res.status(200).json(place.batches);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching batches' });
+  }
+};
+
+exports.getStudentsByBatch = async (req, res) => {
+  try {
+    const { batchId } = req.params;
+
+    // Find batch and populate students
+    const batch = await Batch.findById(batchId).populate('students');
+
+    if (!batch) {
+      return res.status(404).json({ message: 'Batch not found' });
+    }
+
+    res.status(200).json(batch.students);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
