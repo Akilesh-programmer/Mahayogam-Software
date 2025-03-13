@@ -65,9 +65,9 @@ const Login = () => {
         <form className="mt-6" onSubmit={handleLogin}>
           <div>
             <input
-              type="email"
+              type="text"
               name="email"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
