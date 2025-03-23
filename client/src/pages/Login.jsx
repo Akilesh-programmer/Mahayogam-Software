@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center px-4 bg-gradient-to-r from-[#EBC894] to-white md:hidden">
+    <div className="h-screen flex items-center justify-center px-4 bg-gradient-to-r from-[#EBC894] to-white">
       <div className="absolute inset-0 backdrop-blur-lg"></div>
 
       <div

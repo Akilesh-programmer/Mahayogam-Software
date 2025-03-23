@@ -57,7 +57,7 @@ const AdminCities = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center px-4 py-8 md:hidden">
+    <div className="h-screen flex flex-col items-center px-4 py-8">
       <img src={AdminHomeImage} alt="Logo" className="w-80 h-auto mb-6" />
       <div className="relative w-full max-w-md mb-6">
         <input

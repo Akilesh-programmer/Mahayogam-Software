@@ -57,7 +57,7 @@ const AdminBatches = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center px-4 py-8 md:hidden relative">
+    <div className="h-screen flex flex-col items-center px-4 py-8 relative">
       <img src={AdminHomeImage} alt="Logo" className="w-80 h-auto mb-6" />
       {/* Display city name */}
       <h2 className="text-3xl font-extrabold text-gray-800 bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text mb-8">
