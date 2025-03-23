@@ -7,12 +7,14 @@ const BatchAttendanceSummary = () => {
   const { batchId, batchName } = useParams();
   const [latestDates, setLatestDates] = useState([]);
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   console.log(batchId, batchName);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const datesRes = await API.get(`/api/dates/${batchId}`);
         console.log('Latest Dates API Response:', datesRes.data);
 
@@ -28,6 +30,8 @@ const BatchAttendanceSummary = () => {
         setStudents(Array.isArray(studentsRes.data) ? studentsRes.data : []);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,9 +48,12 @@ const BatchAttendanceSummary = () => {
         {batchName}
       </h2>
 
-      {students.length === 0 ? (
+      {loading ? (
+        <p className="text-blue-500 text-center text-lg">Loading...</p>
+      ) : students.length === 0 ? (
         <p className="text-red-500 text-center text-lg">
-          No students found in this batch or no Attendance Record found in this batch.
+          No students found in this batch or no Attendance Record found in this
+          batch.
         </p>
       ) : (
         <div className="relative w-full overflow-hidden border border-gray-300 rounded-lg shadow-lg">
